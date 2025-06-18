@@ -21,11 +21,61 @@ interface PostFormProps {
 }
 
 export default function PostForm({ formAction, initialData }: PostFormProps) {
-  const [FormState, action] = useFormState<FormState>(formAction, {
+  const [formState, action] = useFormState<FormState>(formAction, {
     errors: {},
   });
 
-  return <>
-    <h1 className="text-3xl"></h1>
-  </>
+  return (
+    <>
+      <h1 className="text-3xl font-bold  mb-6">
+        {initialData.title ? "Update" : "Create"}
+      </h1>
+      <form action={action}>
+        <div className="w-96">
+          <div className="mb-4">
+            <label htmlFor="title" className="block mb-2">
+              Title
+            </label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              defaultValue={initialData.title}
+              className="rounded p-2 w-full"
+            />
+            {formState.errors.title && (
+              <div className="text-red-500">
+                {formState.errors.title?.join(", ")}
+              </div>
+            )}
+          </div>
+          <div className="mb-4">
+            <label htmlFor="content" className="block mb-2">
+              Content
+            </label>
+            <textarea
+              name="content"
+              id="content"
+              defaultValue={initialData.content}
+              className="rounded p-2 w-full"
+            >
+              {formState.errors.content && (
+                <div className="text-red-500">
+                  {formState.errors.content?.join(", ")}
+                </div>
+              )}
+            </textarea>
+            <div className="mb-4">
+              <button type="submit" className="bg-white px-4 py-2 rounded mr-2">
+                Save
+              </button>
+              <Link href="/" className="bg-transparent px-4 py-2 rounded">
+                Cancel
+              </Link>
+            </div>
+          </div>
+        </div>
+      </form>
+    </>
+  );
 }
