@@ -1,6 +1,7 @@
 import { fetchPosts } from "@/db/queries/posts";
-import Link from "next/Link";
+
 import PostDelete from "@/components/post-delete";
+import Link from "next/link";
 
 export default async function Home() {
   const posts = await fetchPosts();
